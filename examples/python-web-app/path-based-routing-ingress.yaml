@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-no-auth
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: foo.bar.com
+      http:
+        paths:
+          - path: /first
+            pathType: Prefix
+            backend:
+              service:
+                name: http-svc
+                port:
+                  number: 80
+          - path: /second
+            pathType: Prefix
+            backend:
+              service:
+                name: meow-svc
+                port:
+                  number: 80
+
+# curl 192.168.49.2/first -H 'host: foo.bar.com'
+# curl 192.168.49.2/second -H 'host: foo.bar.com'
