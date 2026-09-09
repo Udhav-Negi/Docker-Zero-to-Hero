@@ -17,5 +17,11 @@ spec:
       containers:
       - name: python-app
         image: python-sample-app-demo:v1
+        env:
+          - name: DB-PORT
+            valueFrom: # The value of DB-PORT env varibale is obtaibned from config maps test-cm 
+              configMapKeyRef:
+                name: test-cm
+                key: db-port 
         ports:
         - containerPort: 8000
