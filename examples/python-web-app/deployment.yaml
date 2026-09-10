@@ -17,11 +17,12 @@ spec:
       containers:
       - name: python-app
         image: python-sample-app-demo:v1
-        env:
-          - name: DB-PORT
-            valueFrom: # The value of DB-PORT env varibale is obtaibned from config maps test-cm 
-              configMapKeyRef:
-                name: test-cm
-                key: db-port 
+        volumeMounts: # Here we are reading from the volume mount
+          - name: db-connection
+            mountPath: /opt # Inside the kubernetes pod, on which folder we want to mount it 
         ports:
         - containerPort: 8000
+      volumes: # Here we are creating a volume  
+        - name: db-connection
+          configMap: 
+            name: test-cm
